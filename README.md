@@ -1,7 +1,8 @@
 # BookStore Project
 
-A proof-of-concept e-commerce platform for books. Users can search by title/author, add books to
-a cart, check out, and receive an email with the eBook file(s) attached.
+The objective of this project is to develop an e-commerce platform for books that will enable users to
+search for their desired books, place orders, and receive an email containing a file that will work as a
+placeholder for an eBook.
 
 ## Tech Stack
 
