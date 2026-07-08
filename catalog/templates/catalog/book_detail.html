@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+    <title>{{ book.title }}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <a href="{% url 'book_list' %}" class="back-link">&larr; Back to all books</a>
+
+    <div class="book-detail">
+        <h1>{{ book.title }}</h1>
+        <p><strong>Genre:</strong> {{ book.genre }}</p>
+        <p><strong>Price:</strong> ${{ book.price }}</p>
+        <p><strong>Publisher:</strong> {{ book.publisher }}</p>
+        <p><strong>Description:</strong> {{ book.description }}</p>
+        <p><strong>Stock:</strong> {{ book.stock }}</p>
+
+        <h3>Authors</h3>
+        <ul>
+            {% for author in book.authors.all %}
+                <li>{{ author.first_name }} {{ author.last_name }}</li>
+            {% endfor %}
+        </ul>
+
+        <form method="post" action="{% url 'add_to_cart' book.id %}">
+            {% csrf_token %}
+            <button type="submit">Add to Cart</button>
+        </form>
+    </div>
+</body>
+</html>

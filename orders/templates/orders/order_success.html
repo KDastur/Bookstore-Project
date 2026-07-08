@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+    <title>Order Confirmed</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <h1>Thank you! Order #{{ order.id }} confirmed.</h1>
+    <p>Check your email — your eBook(s) should arrive shortly.</p>
+    <a href="{% url 'book_list' %}" class="back-link">Back to shop</a>
+</body>
+</html>

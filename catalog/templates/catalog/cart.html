@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+    <title>Your Cart</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <a href="{% url 'book_list' %}" class="back-link">&larr; Continue shopping</a>
+    <h1>Your Cart</h1>
+
+    {% if items %}
+        <ul class="book-list">
+            {% for item in items %}
+                <li class="cart-item">
+                    <span>{{ item.book.title }} — Qty: {{ item.quantity }} — ${{ item.subtotal }}</span>
+                    <form method="post" action="{% url 'remove_from_cart' item.book.id %}">
+                        {% csrf_token %}
+                        <button type="submit">Remove</button>
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+        <p class="cart-total"><strong>Total: ${{ total }}</strong></p>
+        <form method="post" action="{% url 'checkout' %}" class="checkout-form">
+            {% csrf_token %}
+            <label>Phone number: <input type="text" name="phone_number" required></label>
+            <button type="submit">Place Order</button>
+        </form>
+    {% else %}
+        <p>Your cart is empty.</p>
+    {% endif %}
+</body>
+</html>

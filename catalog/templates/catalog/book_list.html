@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+    <title>Bookstore</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <nav>
+        {% if user.is_authenticated %}
+            Welcome, {{ user.username }} | <a href="{% url 'view_cart' %}">Cart</a> |
+            <form method="post" action="{% url 'logout' %}" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit">Log out</button>
+            </form>
+        {% else %}
+            <a href="{% url 'login' %}">Log in</a> | <a href="{% url 'signup' %}">Sign up</a>
+        {% endif %}
+    </nav>
+
+    <h1>Books</h1>
+
+    <form method="get" class="search-form">
+        <input type="text" name="q" placeholder="Search by title or author..." value="{{ query }}">
+        <button type="submit">Search</button>
+    </form>
+
+    <ul class="book-list">
+        {% for book in books %}
+            <li>
+                <a href="{% url 'book_detail' book.id %}">{{ book.title }}</a>
+                — ${{ book.price }} — {{ book.genre }}
+            </li>
+        {% empty %}
+            <li>No books found.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
